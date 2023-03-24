@@ -2,7 +2,6 @@ import com.vanniktech.maven.publish.JavadocJar.Dokka
 import com.vanniktech.maven.publish.KotlinJvm
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import org.gradle.jvm.tasks.Jar
-import org.jetbrains.kotlin.gradle.plugin.KotlinCompilation
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -24,15 +23,15 @@ val customLauncher = service.launcherFor {
   languageVersion.set(JavaLanguageVersion.of(17))
 }
 
-tasks.named<KotlinCompile>("compileJava16Kotlin") {
-  kotlinJavaToolchain.toolchain.use(customLauncher)
-  kotlinOptions.jvmTarget = "16"
-}
+//tasks.named<KotlinCompile>("compileJava16Kotlin") {
+//  kotlinJavaToolchain.toolchain.use(customLauncher)
+//  kotlinOptions.jvmTarget = "17"
+//}
 
 // Grant our java16 sources access to internal APIs in the main source set
 kotlin.target.compilations.run {
   getByName("java16")
-    .associateWith(getByName(KotlinCompilation.MAIN_COMPILATION_NAME))
+    .associateWith(getByName(org.jetbrains.kotlin.gradle.plugin.KotlinCompilation.MAIN_COMPILATION_NAME))
 }
 
 // Package our actual RecordJsonAdapter from java16 sources in and denote it as an MRJAR
@@ -85,7 +84,7 @@ dependencies {
 
 tasks.withType<Jar>().configureEach {
   manifest {
-    attributes("Automatic-Module-Name" to "com.squareup.moshi")
+    attributes("Automatic-Module-Name" to "com.raoulsson.moshi")
   }
 }
 

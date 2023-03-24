@@ -62,7 +62,7 @@ dependencies {
     }
   }
   testImplementation(project(":moshi"))
-  testImplementation(project(":moshi-kotlin"))
+//  testImplementation(project(":moshi-kotlin"))
   testImplementation(project(":moshi-kotlin-tests:extra-moshi-test-module"))
   testImplementation(kotlin("reflect"))
   testImplementation(libs.junit)

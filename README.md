@@ -1,3 +1,36 @@
+Moshi JPMS Version (Temporary)
+========
+
+If you need Moshi in a module project.
+
+This is a temporary version of Moshi that is compatible with Java 9+ modules. It is not intended to be used in production, but rather to test the JPMS compatibility of Moshi.
+
+Build and publish to local maven repository. Then use this dependency:
+
+    implementation("com.raoulsson.moshi:moshi-kotlin:2.0.0-SNAPSHOT")
+
+You have to use "codegen", so classes from and to JSON have to be annotated with:
+
+    @JsonClass(generateAdapter = true)
+
+For that to work, this KPS plugin is needed:
+
+    plugins {
+        id("com.google.devtools.ksp") version "1.8.20-RC-1.0.9"
+    }
+
+and in the dependencies block:
+
+    dependencies {
+        ksp("com.raoulsson.moshi:moshi-kotlin-codegen:2.0.0-SNAPSHOT")
+    }
+
+And use it from one of your modules with:
+
+    requires com.raoulsson.moshi;
+
+Works for me...
+
 Moshi
 =====
 

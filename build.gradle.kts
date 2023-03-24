@@ -8,12 +8,13 @@ import java.net.URL
 
 buildscript {
   dependencies {
-    val kotlinVersion = System.getenv("MOSHI_KOTLIN_VERSION")
-      ?: libs.versions.kotlin.get()
-    val kspVersion = System.getenv("MOSHI_KSP_VERSION")
-      ?: libs.versions.ksp.get()
+    val kotlinVersion = "1.8.10"
+//    val kspVersion = System.getenv("MOSHI_KSP_VERSION")
+//      ?: libs.versions.ksp.get()
     classpath(kotlin("gradle-plugin", version = kotlinVersion))
-    classpath("com.google.devtools.ksp:symbol-processing-gradle-plugin:$kspVersion")
+//    classpath("com.google.devtools.ksp:symbol-processing-gradle-plugin:$kspVersion")
+    classpath("com.google.devtools.ksp:symbol-processing-gradle-plugin:1.8.10-1.0.9")
+
     // https://github.com/melix/japicmp-gradle-plugin/issues/36
     classpath("com.google.guava:guava:31.1-jre")
   }
@@ -27,7 +28,7 @@ plugins {
 }
 
 allprojects {
-  group = "com.squareup.moshi"
+  group = "com.raoulsson.moshi"
   version = "2.0.0-SNAPSHOT"
 
   repositories {
@@ -35,44 +36,44 @@ allprojects {
   }
 }
 
-spotless {
-  format("misc") {
-    target("*.md", ".gitignore")
-    trimTrailingWhitespace()
-    indentWithSpaces(2)
-    endWithNewline()
-  }
-  val configureCommonJavaFormat: JavaExtension.() -> Unit = {
-    googleJavaFormat(libs.versions.gjf.get())
-  }
-  java {
-    configureCommonJavaFormat()
-    target("**/*.java")
-    targetExclude("**/build/**")
-  }
-  kotlin {
-    ktlint(libs.versions.ktlint.get()).editorConfigOverride(
-      mapOf("ktlint_standard_filename" to "disabled"),
-    )
-    target("**/*.kt")
-    trimTrailingWhitespace()
-    endWithNewline()
-    targetExclude("**/Dependencies.kt", "**/build/**")
-  }
-  kotlinGradle {
-    ktlint(libs.versions.ktlint.get())
-    target("**/*.gradle.kts")
-    trimTrailingWhitespace()
-    endWithNewline()
-  }
-}
+//spotless {
+//  format("misc") {
+//    target("*.md", ".gitignore")
+//    trimTrailingWhitespace()
+//    indentWithSpaces(2)
+//    endWithNewline()
+//  }
+//  val configureCommonJavaFormat: JavaExtension.() -> Unit = {
+//    googleJavaFormat(libs.versions.gjf.get())
+//  }
+//  java {
+//    configureCommonJavaFormat()
+//    target("**/*.java")
+//    targetExclude("**/build/**")
+//  }
+//  kotlin {
+//    ktlint(libs.versions.ktlint.get()).editorConfigOverride(
+//      mapOf("ktlint_standard_filename" to "disabled"),
+//    )
+//    target("**/*.kt")
+//    trimTrailingWhitespace()
+//    endWithNewline()
+//    targetExclude("**/Dependencies.kt", "**/build/**")
+//  }
+//  kotlinGradle {
+//    ktlint(libs.versions.ktlint.get())
+//    target("**/*.gradle.kts")
+//    trimTrailingWhitespace()
+//    endWithNewline()
+//  }
+//}
 
 subprojects {
   // Apply with "java" instead of just "java-library" so kotlin projects get it too
   pluginManager.withPlugin("java") {
     configure<JavaPluginExtension> {
       toolchain {
-        languageVersion.set(JavaLanguageVersion.of(19))
+        languageVersion.set(JavaLanguageVersion.of(17))
       }
     }
     if (project.name != "records-tests") {
@@ -92,11 +93,11 @@ subprojects {
       }
     }
 
-    configure<KotlinProjectExtension> {
-      if (project.name != "examples") {
-        explicitApi()
-      }
-    }
+//    configure<KotlinProjectExtension> {
+//      if (project.name != "examples") {
+//        explicitApi()
+//      }
+//    }
   }
 }
 
@@ -122,33 +123,33 @@ allprojects {
     }
   }
 
-  plugins.withId("com.vanniktech.maven.publish.base") {
-    configure<MavenPublishBaseExtension> {
-      publishToMavenCentral(SonatypeHost.S01)
-      signAllPublications()
-      pom {
-        description.set("A modern JSON API for Android and Java")
-        name.set(project.name)
-        url.set("https://github.com/square/moshi/")
-        licenses {
-          license {
-            name.set("The Apache Software License, Version 2.0")
-            url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
-            distribution.set("repo")
-          }
-        }
-        scm {
-          url.set("https://github.com/square/moshi/")
-          connection.set("scm:git:git://github.com/square/moshi.git")
-          developerConnection.set("scm:git:ssh://git@github.com/square/moshi.git")
-        }
-        developers {
-          developer {
-            id.set("square")
-            name.set("Square, Inc.")
-          }
-        }
-      }
-    }
-  }
+//  plugins.withId("com.vanniktech.maven.publish.base") {
+//    configure<MavenPublishBaseExtension> {
+//      publishToMavenCentral(SonatypeHost.S01)
+//      signAllPublications()
+//      pom {
+//        description.set("A modern JSON API for Android and Java")
+//        name.set(project.name)
+//        url.set("https://github.com/square/moshi/")
+//        licenses {
+//          license {
+//            name.set("The Apache Software License, Version 2.0")
+//            url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+//            distribution.set("repo")
+//          }
+//        }
+//        scm {
+//          url.set("https://github.com/square/moshi/")
+//          connection.set("scm:git:git://github.com/square/moshi.git")
+//          developerConnection.set("scm:git:ssh://git@github.com/square/moshi.git")
+//        }
+//        developers {
+//          developer {
+//            id.set("square")
+//            name.set("Square, Inc.")
+//          }
+//        }
+//      }
+//    }
+//  }
 }
