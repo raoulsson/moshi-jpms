@@ -23,8 +23,8 @@ plugins {
 }
 
 allprojects {
-  group = "com.raoulsson.moshi"
-  version = "2.0.1-raoulsson"
+  group = "com.github.raoulsson"  // Use your GitHub username
+  version = "2.0.2-raoulsson"     // Use the specific version or tag
 
   repositories {
     mavenCentral()
