@@ -1,8 +1,4 @@
-import com.diffplug.gradle.spotless.JavaExtension
-import com.vanniktech.maven.publish.MavenPublishBaseExtension
-import com.vanniktech.maven.publish.SonatypeHost
 import org.jetbrains.dokka.gradle.DokkaTask
-import org.jetbrains.kotlin.gradle.dsl.KotlinProjectExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import java.net.URL
 
@@ -21,10 +17,9 @@ buildscript {
 }
 
 plugins {
-  alias(libs.plugins.mavenPublish) apply false
-  alias(libs.plugins.dokka) apply false
-  alias(libs.plugins.spotless)
-  alias(libs.plugins.japicmp) apply false
+    alias(libs.plugins.mavenPublish) apply false
+    alias(libs.plugins.dokka) apply false
+    alias(libs.plugins.japicmp) apply false
 }
 
 allprojects {
@@ -35,38 +30,6 @@ allprojects {
     mavenCentral()
   }
 }
-
-//spotless {
-//  format("misc") {
-//    target("*.md", ".gitignore")
-//    trimTrailingWhitespace()
-//    indentWithSpaces(2)
-//    endWithNewline()
-//  }
-//  val configureCommonJavaFormat: JavaExtension.() -> Unit = {
-//    googleJavaFormat(libs.versions.gjf.get())
-//  }
-//  java {
-//    configureCommonJavaFormat()
-//    target("**/*.java")
-//    targetExclude("**/build/**")
-//  }
-//  kotlin {
-//    ktlint(libs.versions.ktlint.get()).editorConfigOverride(
-//      mapOf("ktlint_standard_filename" to "disabled"),
-//    )
-//    target("**/*.kt")
-//    trimTrailingWhitespace()
-//    endWithNewline()
-//    targetExclude("**/Dependencies.kt", "**/build/**")
-//  }
-//  kotlinGradle {
-//    ktlint(libs.versions.ktlint.get())
-//    target("**/*.gradle.kts")
-//    trimTrailingWhitespace()
-//    endWithNewline()
-//  }
-//}
 
 subprojects {
   // Apply with "java" instead of just "java-library" so kotlin projects get it too
